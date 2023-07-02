@@ -10,6 +10,7 @@ test("addBooking to DXHotel", async ({ page, baseURL }, testInfo) => {
     console.log('TITLE: ' + testInfo.title)
     const booking = new bookingPage(page)        
     await page.goto(`${baseURL}`); 
+    await page.waitForEvent('load')    
     await booking.enterLocation('New York City, USA')   
     await booking.enterCheckIn(booking.addDaysToDate(2))
     await booking.actionTab()    
@@ -21,9 +22,7 @@ test("addBooking to DXHotel", async ({ page, baseURL }, testInfo) => {
     await booking.enterAdults('3')
     await booking.dblClick('#MainContentPlaceHolder_SearchPanel_SearchPanelLayout_ChildrenSpinEdit_I')
     await booking.enterChildren('2')        
-    await booking.clickSearch()
-    
-
+    await booking.clickSearch()    
 })
 
 test("loginSuccefull", async ({ page, baseURL }, testInfo) => {
