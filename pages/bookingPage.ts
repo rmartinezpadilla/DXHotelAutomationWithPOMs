@@ -1,6 +1,7 @@
 import { Page } from "playwright";
 
 export default class bookingPage{
+    
 
     constructor(public page:Page){
 
