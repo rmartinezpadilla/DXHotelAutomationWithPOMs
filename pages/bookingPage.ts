@@ -7,10 +7,6 @@ export default class bookingPage{
 
     }
 
-     async clickLogo(){
-        await this.page.click('//a[@id=\'HeaderControl_hlLogo\']//img[1]')        
-    }
-
     async enterLocation(location: string){
         await this.page.locator('#MainContentPlaceHolder_SearchPanel_SearchPanelLayout_LocationComboBox_I')
         .type(location);
@@ -53,6 +49,12 @@ export default class bookingPage{
         await this.page.dblclick(data)
     }
 
+    async clickElement(data){
+        await this.page.click(data)
+    }
+
+    #MainContentPlaceHolder_FilterFormLayout_OurRatingCheckBoxList_VI
+
     async pause(){
         await  this.page.pause()
     }
@@ -63,33 +65,32 @@ export default class bookingPage{
 
     async actionTab(){
         await this.page.keyboard.press('Tab')    
-    }
+    }    
 
-    async selectMoneyRange(){
-        
+    async selectMoneyRange(){    
 
         await this.page.waitForSelector('#MainContentPlaceHolder_FilterFormLayout_NightlyRateTrackBar_T');
         const s = await this.page.$('#MainContentPlaceHolder_FilterFormLayout_NightlyRateTrackBar_T')
         let ele = this.page.locator('#NightyRateTrackBarLabel_L')
         let text = await ele.innerHTML().valueOf();
         console.log('Initial text: ' + text);
-        let targetAmount = "$250";
+        let targetAmount = "$200";
         let isCompleted = false;
         if (s) {
-  
+            while (!isCompleted) {
                 let srcBound = await s.boundingBox();
                 if (srcBound) {
                     await this.page.mouse.move(srcBound.x + srcBound.width / 2,
                         srcBound.y + srcBound.height / 2)
                     await this.page.mouse.down();
-                    await this.page.mouse.move(srcBound.x + 25, srcBound.y + srcBound.height / 2);
+                    await this.page.mouse.move(srcBound.x + 15, srcBound.y + srcBound.height / 2);
                     await this.page.mouse.up();
                     let text = await ele.innerHTML().valueOf();
-                    if (text == targetAmount) {
+                    if (text <= targetAmount) {
                         isCompleted = true;
                     }
                 }
-            
+            }
 
         }
 
@@ -100,10 +101,66 @@ export default class bookingPage{
 
 
        // expect(await this.page.innerText("#NightyRateTrackBarLabel_L")).toContain("$110");
-        console.log('1. '+ await this.page.locator('#NightyRateTrackBarLabel_L').innerHTML().valueOf())
-        //console.log('2. '+ await this.page.locator('#NightyRateTrackBarLabel_L').textContent().valueOf())
+       console.log('modificado: '+ await this.page.locator('#NightyRateTrackBarLabel_L').innerHTML().valueOf())
+        //.log('2. '+ await this.page.locator('#NightyRateTrackBarLabel_L').textContent().valueOf())
     }
     
+async viendoInfo(){
+
+
+    const itemContainer = await this.page.locator('//div[@class=\'price\']').all()
+
+    const randomIndex = Math.floor(Math.random()*itemContainer.length)
+  
+    const randomItem = itemContainer[randomIndex]
+
+    console.log(itemContainer , randomIndex , randomItem)
+        /*
+
+    const expectedName =  await randomItem.locator('.inventory_item_name').innerText()
+*/
+    
+
+    console.log(await this.page.locator('//div[@class=\'price\']').innerHTML().valueOf())
+}
+
+    async selectCustomerRating(){        
+        await this.page.waitForSelector('#MainContentPlaceHolder_FilterFormLayout_2');
+        const s = await this.page.$('#MainContentPlaceHolder_FilterFormLayout_CustomerRatingTrackBar_T')
+        let ele = this.page.locator('#CustomerRatingTrackbarLabel_R')
+        let text = await ele.innerHTML().valueOf();
+//console.log('Initial text: ' + text);
+        let targetAmount = "3";
+        let isCompleted = false;
+        if (s) {
+            while (!isCompleted) {
+                let srcBound = await s.boundingBox();
+                if (srcBound) {
+                    await this.page.mouse.move(srcBound.x + srcBound.width / 2,
+                        srcBound.y + srcBound.height / 2)
+                    await this.page.mouse.down();
+                    await this.page.mouse.move(srcBound.x + 80, srcBound.y + srcBound.height / 2);
+                    await this.page.mouse.up();
+                    let text = await ele.innerHTML().valueOf();
+                    if (text >= targetAmount) {
+                        isCompleted = true;
+                    }
+                }
+            }
+
+        }
+
+
+
+        await this.page.waitForTimeout(5000)
+
+
+
+       // expect(await this.page.innerText("#NightyRateTrackBarLabel_L")).toContain("$110");
+       //console.log('modificado: '+ await this.page.locator('#CustomerRatingTrackbarLabel_R').innerHTML().valueOf())
+        //.log('2. '+ await this.page.locator('#NightyRateTrackBarLabel_L').textContent().valueOf())
+    }
+
     addDaysToDate(days) {
         // la fecha
     //const fechaactual = Date.now();

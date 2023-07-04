@@ -12,6 +12,7 @@ Que cosas necesitas para instalar el software y como instalarlas
 3. JUnit
 4. Visual Studio Code (IDE)
 5. Extensión Playwright test para Visual Studio Code (plugin)
+6. Extension Playwright Runner para Visual Studio Code (plugin)
 
 
 Instalación 🔧
@@ -21,6 +22,15 @@ Instalación 🔧
 4. Buscar la ruta donde tenemos el proyecto
 5. Seleccionar la carpeta principal del proyecto
 6. Abrir
+
+Archivos del proyecto
+
+Automáticamente, playwright creará los siguientes ficheros:
+
+1. playwright.config.ts  => Fichero de configuración.
+2. DXHotelTestRunner/ => Carpeta donde se guardaran los ficheros para ejecutar las pruebas.
+3. pages/ => Carpeta donde se almacena las caracteristicas de las páginas.
+4. playwright-report/ => Carpeta donde se guardará el reporte html una vez se finalicen las pruebas
 
 Ejecutando las pruebas ⚙️
 Una vez abrimos el proyecto en Visual Studio Code (IDE) navegando por las carpetas e ingresamos a la siguiente ruta "DXHotelAutomationWithPOMs\DXHotelTestRunner" que es donde se encuentran todos los archivos de pruebas, una vez en esta dirección buscamos el archivo "addToBookingDXHotelTest.test.js" que se encuentra dentro de la carpeta,una vez abrimos el archivo podremos darle clic derecho y seleccionamos play test para ejcutar la automatizaicón
