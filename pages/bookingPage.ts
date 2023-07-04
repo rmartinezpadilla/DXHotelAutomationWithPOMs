@@ -1,4 +1,4 @@
-import { Page } from "playwright";
+import { expect, Page } from "@playwright/test";
 
 export default class bookingPage{
     
@@ -65,6 +65,45 @@ export default class bookingPage{
         await this.page.keyboard.press('Tab')    
     }
 
+    async selectMoneyRange(){
+        
+
+        await this.page.waitForSelector('#MainContentPlaceHolder_FilterFormLayout_NightlyRateTrackBar_T');
+        const s = await this.page.$('#MainContentPlaceHolder_FilterFormLayout_NightlyRateTrackBar_T')
+        let ele = this.page.locator('#NightyRateTrackBarLabel_L')
+        let text = await ele.innerHTML().valueOf();
+        console.log('Initial text: ' + text);
+        let targetAmount = "$250";
+        let isCompleted = false;
+        if (s) {
+  
+                let srcBound = await s.boundingBox();
+                if (srcBound) {
+                    await this.page.mouse.move(srcBound.x + srcBound.width / 2,
+                        srcBound.y + srcBound.height / 2)
+                    await this.page.mouse.down();
+                    await this.page.mouse.move(srcBound.x + 25, srcBound.y + srcBound.height / 2);
+                    await this.page.mouse.up();
+                    let text = await ele.innerHTML().valueOf();
+                    if (text == targetAmount) {
+                        isCompleted = true;
+                    }
+                }
+            
+
+        }
+
+
+
+        await this.page.waitForTimeout(5000)
+
+
+
+       // expect(await this.page.innerText("#NightyRateTrackBarLabel_L")).toContain("$110");
+        console.log('1. '+ await this.page.locator('#NightyRateTrackBarLabel_L').innerHTML().valueOf())
+        //console.log('2. '+ await this.page.locator('#NightyRateTrackBarLabel_L').textContent().valueOf())
+    }
+    
     addDaysToDate(days) {
         // la fecha
     //const fechaactual = Date.now();
