@@ -28,6 +28,8 @@ test("addBooking to DXHotel", async ({ page, baseURL }, testInfo) => {
     await booking.clickElement('#MainContentPlaceHolder_FilterFormLayout_OurRatingCheckBoxList_RB1_I_D')
     await booking.clickElement('#MainContentPlaceHolder_FilterFormLayout_ApplyFilterButton')
     await booking.viendoInfo()
+    
+
     await booking.pause()
 })
 

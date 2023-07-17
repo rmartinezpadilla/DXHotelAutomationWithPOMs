@@ -1,4 +1,4 @@
-import { expect, Page } from "@playwright/test";
+import { expect, Page, Locator } from "@playwright/test";
 
 export default class bookingPage{
     
@@ -73,7 +73,7 @@ export default class bookingPage{
         const s = await this.page.$('#MainContentPlaceHolder_FilterFormLayout_NightlyRateTrackBar_T')
         let ele = this.page.locator('#NightyRateTrackBarLabel_L')
         let text = await ele.innerHTML().valueOf();
-        console.log('Initial text: ' + text);
+//        console.log('Initial text: ' + text);
         let targetAmount = "$200";
         let isCompleted = false;
         if (s) {
@@ -95,18 +95,26 @@ export default class bookingPage{
         }
 
 
-
         await this.page.waitForTimeout(5000)
-
-
-
-       // expect(await this.page.innerText("#NightyRateTrackBarLabel_L")).toContain("$110");
-       console.log('modificado: '+ await this.page.locator('#NightyRateTrackBarLabel_L').innerHTML().valueOf())
-        //.log('2. '+ await this.page.locator('#NightyRateTrackBarLabel_L').textContent().valueOf())
-    }
+        }
     
-async viendoInfo(){
+    async viendoInfo(){
+    //const contenidoII = (await this.page.locator('//td[@class=\'dxdvItem_Metropolis item dx-al\']//div[@class=\'hotel-right-block\']//div[ @class=\'price\']').all())
 
+    
+    const dats = this.page.locator('td#MainContentPlaceHolder_HotelsDataView_ICell tr')
+
+     console.log(dats.allTextContents())
+     console.log('cuantos hay¡?' , dats.all())
+
+     for (const li of await this.page.locator('td#MainContentPlaceHolder_HotelsDataView_ICell tr').all())
+  console.log('liiii ' , li)
+     //console.log(dats.textContent())
+     console.log(dats.allTextContents())
+//console.log(dats.innerHTML())
+     //console.log(dats.innerText())
+
+/*
 
     const itemContainer = await this.page.locator('//div[@class=\'price\']').all()
 
@@ -120,8 +128,11 @@ async viendoInfo(){
     const expectedName =  await randomItem.locator('.inventory_item_name').innerText()
 */
     
-
+/*
     console.log(await this.page.locator('//div[@class=\'price\']').innerHTML().valueOf())
+    //console.log((await this.page.locator('//div[@class=\'price\']').innerText()).valueOf())
+*/
+
 }
 
     async selectCustomerRating(){        
